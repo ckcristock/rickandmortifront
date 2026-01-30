@@ -96,6 +96,14 @@ export class CharacterListComponent {
     this.loadCharacters();
   }
 
+  protected clearFilters(): void {
+    this.nameFilter.set('');
+    this.statusFilter.set('');
+    this.speciesFilter.set('');
+    this.currentPage.set(1);
+    this.loadCharacters();
+  }
+
   protected goToPage(page: number): void {
     if (page > 0 && page <= this.totalPages()) {
       this.currentPage.set(page);
