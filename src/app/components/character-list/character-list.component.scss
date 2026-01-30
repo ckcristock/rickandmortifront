@@ -1,16 +1,16 @@
 .character-list-container {
   min-height: 100vh;
-  padding: 2rem;
+  padding: 1.5rem 2rem;
   background-color: #f5f5f5;
 }
 
 .header {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   
   h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: bold;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     text-align: center;
   }
 }
@@ -20,16 +20,16 @@
   gap: 1rem;
   justify-content: center;
   flex-wrap: wrap;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .filter-input,
 .filter-select {
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 0.75rem;
   border: 2px solid #333;
   border-radius: 4px;
-  font-size: 1rem;
-  min-width: 200px;
+  font-size: 0.9rem;
+  min-width: 180px;
   
   &:focus {
     outline: none;
@@ -85,9 +85,12 @@
 
 .characters-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-bottom: 3rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .character-card {
@@ -106,7 +109,7 @@
 
 .character-image {
   width: 100%;
-  height: 300px;
+  height: 200px;
   overflow: hidden;
   border-bottom: 3px solid #333;
   
@@ -118,14 +121,14 @@
 }
 
 .character-info {
-  padding: 1rem;
+  padding: 0.75rem;
 }
 
 .character-name {
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
-  min-height: 2.5rem;
+  min-height: 2rem;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -134,7 +137,7 @@
 }
 
 .character-detail {
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: #666;
   margin: 0;
 }

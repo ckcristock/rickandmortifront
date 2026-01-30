@@ -3,10 +3,11 @@ import { FormsModule } from '@angular/forms';
 import { Character, CharacterResponse } from '../../models/character.interface';
 import { CharacterService } from '../../services/character.service';
 import { CharacterDetailComponent } from '../character-detail/character-detail.component';
+import { ToolbarComponent } from '../toolbar/toolbar.component';
 
 @Component({
   selector: 'app-character-list',
-  imports: [FormsModule, CharacterDetailComponent],
+  imports: [FormsModule, CharacterDetailComponent, ToolbarComponent],
   templateUrl: './character-list.component.html',
   styleUrl: './character-list.component.scss',
 })

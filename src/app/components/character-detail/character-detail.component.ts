@@ -7,6 +7,11 @@ import { CharacterService } from '../../services/character.service';
   imports: [],
   templateUrl: './character-detail.component.html',
   styleUrl: './character-detail.component.scss',
+  host: {
+    '(document:keydown.arrowLeft)': 'onKeyLeft()',
+    '(document:keydown.arrowRight)': 'onKeyRight()',
+    '(document:keydown.escape)': 'onClose()',
+  },
 })
 export class CharacterDetailComponent {
   private readonly characterService = inject(CharacterService);
@@ -67,5 +72,13 @@ export class CharacterDetailComponent {
     if (event.target === event.currentTarget) {
       this.onClose();
     }
+  }
+
+  protected onKeyLeft(): void {
+    this.onNavigate('prev');
+  }
+
+  protected onKeyRight(): void {
+    this.onNavigate('next');
   }
 }
