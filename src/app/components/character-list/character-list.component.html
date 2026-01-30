@@ -1,0 +1,88 @@
+<div class="character-list-container">
+  <header class="header">
+    <h1>PERSONAJES</h1>
+    
+    <div class="filters">
+      <input 
+        type="text" 
+        class="filter-input"
+        placeholder="Nombre:"
+        [(ngModel)]="nameFilter"
+        (keyup.enter)="applyFilters()"
+      />
+      
+      <select 
+        class="filter-select"
+        [(ngModel)]="statusFilter"
+        (change)="applyFilters()"
+      >
+        <option value="">Estado:</option>
+        <option value="alive">Vivo</option>
+        <option value="dead">Muerto</option>
+        <option value="unknown">Desconocido</option>
+      </select>
+      
+      <input 
+        type="text" 
+        class="filter-input"
+        placeholder="Especie:"
+        [(ngModel)]="speciesFilter"
+        (keyup.enter)="applyFilters()"
+      />
+    </div>
+  </header>
+
+  @if (loading()) {
+    <div class="loading">
+      <div class="spinner"></div>
+      <p>Cargando personajes...</p>
+    </div>
+  } @else if (error()) {
+    <div class="error">
+      <p>{{ error() }}</p>
+      <button (click)="loadCharacters()">Reintentar</button>
+    </div>
+  } @else if (characters().length === 0) {
+    <div class="no-results">
+      <p>No se encontraron personajes</p>
+    </div>
+  } @else {
+    <div class="characters-grid">
+      @for (character of characters(); track character.id) {
+        <div class="character-card" (click)="openDetail(character)">
+          <div class="character-image">
+            <img [src]="character.image" [alt]="character.name" />
+          </div>
+          <div class="character-info">
+            <h3 class="character-name">{{ character.name }}</h3>
+            <p class="character-detail">{{ character.status }}</p>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="pagination">
+      @for (page of visiblePages(); track $index) {
+        @if (page === -1) {
+          <span class="ellipsis">...</span>
+        } @else {
+          <button 
+            class="page-button"
+            [class.active]="page === currentPage()"
+            (click)="goToPage(page)"
+          >
+            {{ page }}
+          </button>
+        }
+      }
+    </div>
+  }
+</div>
+
+@if (selectedCharacter()) {
+  <app-character-detail 
+    [character]="selectedCharacter()!"
+    (close)="closeDetail()"
+    (navigate)="navigateCharacter($event)"
+  />
+}
