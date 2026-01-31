@@ -45,6 +45,7 @@
       <button 
         class="clear-filters-btn"
         (click)="clearFilters()"
+        [disabled]="!hasActiveFilters()"
         title="Clear all filters"
       >
         Clear Filters

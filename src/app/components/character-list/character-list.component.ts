@@ -24,6 +24,10 @@ export class CharacterListComponent {
   protected readonly statusFilter = signal('');
   protected readonly speciesFilter = signal('');
 
+  protected readonly hasActiveFilters = computed(() => 
+    this.nameFilter() !== '' || this.statusFilter() !== '' || this.speciesFilter() !== ''
+  );
+
   protected readonly visiblePages = computed(() => {
     const current = this.currentPage();
     const total = this.totalPages();
