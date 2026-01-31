@@ -8,7 +8,7 @@ import { Character, CharacterResponse, Episode } from '../models/character.inter
 })
 export class CharacterService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = 'https://rickandmortyapi.com/api';
+  private readonly apiUrl = 'http://localhost:5262/api';
 
   getCharacters(
     page: number = 1,
@@ -29,13 +29,13 @@ export class CharacterService {
     }
 
     return this.http
-      .get<CharacterResponse>(`${this.apiUrl}/character`, { params })
+      .get<CharacterResponse>(`${this.apiUrl}/characters`, { params })
       .pipe(catchError(this.handleError));
   }
 
   getCharacterById(id: number): Observable<Character> {
     return this.http
-      .get<Character>(`${this.apiUrl}/character/${id}`)
+      .get<Character>(`${this.apiUrl}/characters/${id}`)
       .pipe(catchError(this.handleError));
   }
 

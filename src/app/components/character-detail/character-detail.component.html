@@ -30,10 +30,8 @@
 
         <div class="episodes-section">
           <h3>Episodios</h3>
-          @if (loadingEpisodes()) {
-            <div class="loading-episodes">
-              <div class="spinner-small"></div>
-            </div>
+          @if (episodes().length === 0) {
+            <p class="no-episodes">No episodes</p>
           } @else {
             <div class="episodes-list">
               @for (episode of episodes(); track episode.id) {

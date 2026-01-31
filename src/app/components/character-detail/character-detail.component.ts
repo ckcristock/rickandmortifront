@@ -28,7 +28,6 @@ export class CharacterDetailComponent {
   protected readonly character = signal<Character | null>(null);
   protected readonly episodes = signal<Episode[]>([]);
   protected readonly loading = signal(true);
-  protected readonly loadingEpisodes = signal(false);
 
   constructor() {
     effect(
@@ -40,16 +39,6 @@ export class CharacterDetailComponent {
       },
       { allowSignalWrites: true },
     );
-
-    effect(
-      () => {
-        const char = this.character();
-        if (char) {
-          this.loadEpisodes();
-        }
-      },
-      { allowSignalWrites: true },
-    );
   }
 
   private loadCharacter(id: number): void {
@@ -57,36 +46,17 @@ export class CharacterDetailComponent {
     this.characterService.getCharacterById(id).subscribe({
       next: (char: Character) => {
         this.character.set(char);
+        // Los episodios ya vienen en el character desde el backend
+        if (char.episodes) {
+          this.episodes.set(char.episodes);
+        } else {
+          this.episodes.set([]);
+        }
         this.loading.set(false);
       },
       error: () => {
         this.loading.set(false);
         this.router.navigate(['/characters']);
-      },
-    });
-  }
-
-  protected loadEpisodes(): void {
-    const char = this.character();
-    if (!char?.episode?.length) {
-      this.episodes.set([]);
-      return;
-    }
-
-    this.loadingEpisodes.set(true);
-    const episodeIds = char.episode.map((url) => {
-      const parts = url.split('/');
-      return parseInt(parts[parts.length - 1]);
-    });
-
-    this.characterService.getMultipleEpisodes(episodeIds).subscribe({
-      next: (eps: Episode[] | Episode) => {
-        this.episodes.set(Array.isArray(eps) ? eps : [eps]);
-        this.loadingEpisodes.set(false);
-      },
-      error: () => {
-        this.episodes.set([]);
-        this.loadingEpisodes.set(false);
       },
     });
   }

@@ -8,9 +8,10 @@ export interface Character {
   origin: Location;
   location: Location;
   image: string;
-  episode: string[];
-  url: string;
-  created: string;
+  episode?: string[]; // URLs de episodios (API pública)
+  episodes?: Episode[]; // Episodios completos (Backend .NET)
+  url?: string;
+  created?: string;
 }
 
 export interface Location {
@@ -33,9 +34,9 @@ export interface Info {
 export interface Episode {
   id: number;
   name: string;
-  air_date: string;
+  airDate: string; // Cambio de air_date a airDate (camelCase)
   episode: string;
-  characters: string[];
-  url: string;
-  created: string;
+  characters?: string[];
+  url?: string;
+  created?: string;
 }
