@@ -63,23 +63,23 @@
         
         <div class="info-fields">
           <div class="info-row">
-            <div class="info-label">Estado:</div>
+            <div class="info-label">Status:</div>
             <div class="info-value">{{ character()!.status }}</div>
           </div>
           <div class="info-row">
-            <div class="info-label">Especie:</div>
+            <div class="info-label">Species:</div>
             <div class="info-value">{{ character()!.species }}</div>
           </div>
           <div class="info-row">
-            <div class="info-label">Género:</div>
+            <div class="info-label">Gender:</div>
             <div class="info-value">{{ character()!.gender ?? 'Unknown' }}</div>
           </div>
           <div class="info-row">
-            <div class="info-label">Origen:</div>
+            <div class="info-label">Origin:</div>
             <div class="info-value">{{ character()!.origin?.name ?? 'Unknown' }}</div>
           </div>
           <div class="info-row" style="grid-column: span 2;">
-            <div class="info-label">Ubicación:</div>
+            <div class="info-label">Location:</div>
             <div class="info-value">{{ character()!.location?.name ?? 'Unknown' }}</div>
           </div>
         </div>
