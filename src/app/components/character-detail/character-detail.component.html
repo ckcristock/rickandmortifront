@@ -18,7 +18,11 @@
             <div class="character-name-section">
               <h2>Name:</h2>
               <div class="character-image-container">
-                <img [src]="character()!.image" [alt]="character()!.name" />
+                <img 
+                  [src]="character()!.image" 
+                  [alt]="character()!.name"
+                  (error)="onImageError($event)"
+                />
             </div>
             <div class="character-details-text">
               <p><strong>{{ character()!.name }}</strong></p>
@@ -50,7 +54,11 @@
 
       <div class="center-section">
         <div class="large-image-container">
-          <img [src]="character()!.image" [alt]="character()!.name" />
+          <img 
+            [src]="character()!.image" 
+            [alt]="character()!.name"
+            (error)="onImageError($event)"
+          />
         </div>
         
         <div class="info-fields">

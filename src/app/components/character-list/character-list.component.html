@@ -78,6 +78,7 @@
               [src]="character.image" 
               [alt]="character.name"
               (load)="$any($event.target).previousElementSibling.style.display='none'"
+              (error)="onImageError($event)"
             />
           </div>
           <div class="character-info">
