@@ -1,6 +1,7 @@
 import { Component, computed, effect, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterOutlet } from '@angular/router';
+import { Subject, debounceTime, distinctUntilChanged, switchMap, of, catchError } from 'rxjs';
 import { Character, CharacterResponse } from '../../models/character.interface';
 import { CharacterService } from '../../services/character.service';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
@@ -14,6 +15,7 @@ import { ToolbarComponent } from '../toolbar/toolbar.component';
 export class CharacterListComponent {
   private readonly characterService = inject(CharacterService);
   private readonly router = inject(Router);
+  private readonly searchSubject = new Subject<void>();
 
   protected readonly characters = signal<Character[]>([]);
   protected readonly loading = signal(false);
@@ -62,12 +64,51 @@ export class CharacterListComponent {
   });
 
   constructor() {
+    // Effect solo para cambios de página (no filtros)
     effect(
       () => {
+        const page = this.currentPage();
+        // Solo ejecutar si la página cambió, no por otros cambios
         this.loadCharacters();
       },
       { allowSignalWrites: true },
     );
+
+    // Debounce para búsquedas con filtros
+    this.searchSubject
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        switchMap(() => {
+          this.loading.set(true);
+          this.error.set(null);
+          
+          return this.characterService
+            .getCharacters(
+              this.currentPage(),
+              this.nameFilter() || undefined,
+              this.statusFilter() || undefined,
+              this.speciesFilter() || undefined,
+            )
+            .pipe(
+              catchError((err: Error) => {
+                this.error.set(err.message);
+                this.characters.set([]);
+                this.loading.set(false);
+                return of(null);
+              })
+            );
+        })
+      )
+      .subscribe({
+        next: (response: CharacterResponse | null) => {
+          if (response) {
+            this.characters.set(response.results);
+            this.totalPages.set(response.info.pages);
+            this.loading.set(false);
+          }
+        },
+      });
   }
 
   protected loadCharacters(): void {
@@ -97,7 +138,7 @@ export class CharacterListComponent {
 
   protected applyFilters(): void {
     this.currentPage.set(1);
-    this.loadCharacters();
+    this.searchSubject.next();
   }
 
   protected clearFilters(): void {
@@ -105,7 +146,7 @@ export class CharacterListComponent {
     this.statusFilter.set('');
     this.speciesFilter.set('');
     this.currentPage.set(1);
-    this.loadCharacters();
+    this.searchSubject.next();
   }
 
   protected goToPage(page: number): void {
