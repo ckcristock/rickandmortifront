@@ -72,7 +72,12 @@
       @for (character of characters(); track character.id) {
         <div class="character-card" (click)="openDetail(character)">
           <div class="character-image">
-            <img [src]="character.image" [alt]="character.name" />
+            <div class="image-loader"></div>
+            <img 
+              [src]="character.image" 
+              [alt]="character.name"
+              (load)="$any($event.target).previousElementSibling.style.display='none'"
+            />
           </div>
           <div class="character-info">
             <h3 class="character-name">{{ character.name }}</h3>
