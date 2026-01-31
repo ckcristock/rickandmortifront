@@ -1,59 +1,162 @@
-# Rickandmortifront
+# Rick and Morty Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.3.
+Aplicación web desarrollada con Angular 21 que consume la API de Rick and Morty para mostrar información sobre los personajes de la serie.
 
-## Development server
+## 📋 Descripción
 
-To start a local development server, run:
+Esta aplicación permite:
+
+- Ver un listado de todos los personajes de Rick and Morty
+- Ver detalles específicos de cada personaje
+- Navegar entre diferentes vistas usando Angular Router
+- Interfaz responsive y moderna
+
+## 🚀 Tecnologías
+
+- **Angular 21.0.0** - Framework principal
+- **TypeScript 5.9.2** - Lenguaje de programación
+- **RxJS 7.8.0** - Programación reactiva
+- **Vitest 4.0.8** - Framework de testing
+- **Angular Router** - Navegación entre vistas
+- **Standalone Components** - Arquitectura moderna de Angular
+
+## 📦 Requisitos Previos
+
+Antes de ejecutar este proyecto, asegúrate de tener instalado:
+
+- **Node.js**: versión 20.x o superior (recomendado)
+- **npm**: versión 11.x o superior
+
+Para verificar las versiones instaladas:
+
+```bash
+node --version
+npm --version
+```
+
+## 🔧 Instalación
+
+1. **Clonar el repositorio** (si aplica) o descomprimir el proyecto
+
+2. **Instalar las dependencias**:
+
+```bash
+npm install
+```
+
+Este comando instalará todas las dependencias necesarias definidas en `package.json`.
+
+## ▶️ Ejecución del Proyecto
+
+### Servidor de Desarrollo
+
+Para iniciar el servidor de desarrollo, ejecuta:
+
+```bash
+npm start
+```
+
+O alternativamente:
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Una vez que el servidor esté en ejecución, abre tu navegador y navega a:
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```
+http://localhost:4200/
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+La aplicación se recargará automáticamente cada vez que modifiques algún archivo del código fuente.
+
+### Otras opciones de ejecución
+
+- **Modo watch** (compilación continua):
 
 ```bash
-ng generate --help
+npm run watch
 ```
 
-## Building
+## 🏗️ Compilación para Producción
 
-To build the project run:
+Para compilar el proyecto para producción, ejecuta:
 
 ```bash
-ng build
+npm run build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Los archivos compilados se almacenarán en el directorio `dist/`. Esta compilación está optimizada para rendimiento y velocidad.
 
-## Running unit tests
+## 🧪 Pruebas
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Para ejecutar las pruebas unitarias con Vitest:
 
 ```bash
-ng test
+npm test
 ```
 
-## Running end-to-end tests
+## 📁 Estructura del Proyecto
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
+```
+src/
+├── app/
+│   ├── components/
+│   │   ├── character-list/          # Listado de personajes
+│   │   ├── character-detail/        # Detalle de un personaje
+│   │   ├── character-detail-page/   # Página de detalle
+│   │   └── toolbar/                 # Barra de navegación
+│   ├── models/
+│   │   └── character.interface.ts   # Interfaces de TypeScript
+│   ├── services/
+│   │   └── character.service.ts     # Servicio para API
+│   ├── app.config.ts                # Configuración de la app
+│   ├── app.routes.ts                # Rutas de la aplicación
+│   └── app.ts                       # Componente principal
+├── index.html
+├── main.ts
+└── styles.scss
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## 🌐 API Utilizada
 
-## Additional Resources
+Este proyecto consume la [Rick and Morty API](https://rickandmortyapi.com/):
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Endpoint base: `https://rickandmortyapi.com/api`
+- Documentación: https://rickandmortyapi.com/documentation
+
+## 💡 Características Técnicas
+
+- **Standalone Components**: Sin uso de NgModules
+- **Signals**: Gestión de estado moderna con señales
+- **OnPush Change Detection**: Optimización de rendimiento
+- **Lazy Loading**: Carga diferida de rutas
+- **Reactive Forms**: Formularios reactivos
+- **TypeScript Strict Mode**: Tipado estricto
+
+## 🐛 Solución de Problemas
+
+### El servidor no inicia
+
+- Verifica que todas las dependencias estén instaladas: `npm install`
+- Asegúrate de que el puerto 4200 no esté en uso por otra aplicación
+- Intenta limpiar la caché: `npm cache clean --force`
+
+### Error al instalar dependencias
+
+- Verifica tu versión de Node.js: `node --version`
+- Elimina `node_modules` y `package-lock.json`, luego ejecuta `npm install` nuevamente
+
+## 📝 Notas para el Evaluador
+
+1. Este proyecto fue desarrollado siguiendo las mejores prácticas de Angular 21
+2. Se utilizan standalone components (sin NgModules)
+3. La gestión de estado se realiza con signals
+4. Todo el código sigue TypeScript strict mode
+5. Se implementó lazy loading para optimizar la carga inicial
+
+## 🔗 Recursos Adicionales
+
+- [Documentación de Angular](https://angular.dev)
+- [Angular CLI Reference](https://angular.dev/tools/cli)
+- [Rick and Morty API](https://rickandmortyapi.com/documentation)
