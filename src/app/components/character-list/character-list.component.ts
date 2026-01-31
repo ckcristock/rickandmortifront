@@ -1,18 +1,19 @@
 import { Component, computed, effect, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Character, CharacterResponse } from '../../models/character.interface';
 import { CharacterService } from '../../services/character.service';
-import { CharacterDetailComponent } from '../character-detail/character-detail.component';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
 
 @Component({
   selector: 'app-character-list',
-  imports: [FormsModule, CharacterDetailComponent, ToolbarComponent],
+  imports: [FormsModule, ToolbarComponent],
   templateUrl: './character-list.component.html',
   styleUrl: './character-list.component.scss',
 })
 export class CharacterListComponent {
   private readonly characterService = inject(CharacterService);
+  private readonly router = inject(Router);
 
   protected readonly characters = signal<Character[]>([]);
   protected readonly loading = signal(false);
@@ -22,7 +23,6 @@ export class CharacterListComponent {
   protected readonly nameFilter = signal('');
   protected readonly statusFilter = signal('');
   protected readonly speciesFilter = signal('');
-  protected readonly selectedCharacter = signal<Character | null>(null);
 
   protected readonly visiblePages = computed(() => {
     const current = this.currentPage();
@@ -111,24 +111,6 @@ export class CharacterListComponent {
   }
 
   protected openDetail(character: Character): void {
-    this.selectedCharacter.set(character);
-  }
-
-  protected closeDetail(): void {
-    this.selectedCharacter.set(null);
-  }
-
-  protected navigateCharacter(direction: 'prev' | 'next'): void {
-    const current = this.selectedCharacter();
-    if (!current) return;
-
-    const chars = this.characters();
-    const currentIndex = chars.findIndex((c) => c.id === current.id);
-
-    if (direction === 'prev' && currentIndex > 0) {
-      this.selectedCharacter.set(chars[currentIndex - 1]);
-    } else if (direction === 'next' && currentIndex < chars.length - 1) {
-      this.selectedCharacter.set(chars[currentIndex + 1]);
-    }
+    this.router.navigate(['/characters', character.id]);
   }
 }

@@ -1,0 +1,101 @@
+@if (loading()) {
+  <div class="modal-backdrop">
+    <div class="loading">
+      <div class="spinner"></div>
+      <p>Loading character...</p>
+    </div>
+  </div>
+} @else if (character()) {
+  <div class="modal-backdrop" (click)="onBackdropClick($event)">
+    <div class="modal-content">
+      <button class="close-button" (click)="onClose()" aria-label="Close">
+        ✕
+      </button>
+
+      <div class="modal-body">
+        <div class="left-section">
+          <div class="character-main-info">
+            <div class="character-name-section">
+              <h2>Name:</h2>
+              <div class="character-image-container">
+                <img [src]="character()!.image" [alt]="character()!.name" />
+              </div>
+              <div class="character-details-text">
+                <p><strong>{{ character()!.name }}</strong></p>
+                <p>{{ character()!.status }}</p>
+                <p>{{ character()!.species }}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="episodes-section">
+            <h3>Episodes</h3>
+            @if (loadingEpisodes()) {
+              <div class="loading-episodes">
+                <div class="spinner-small"></div>
+              </div>
+            } @else {
+              <div class="episodes-list">
+                @for (episode of episodes(); track episode.id) {
+                  <div class="episode-item">
+                    <div class="episode-icon"></div>
+                    <div class="episode-info">
+                      <p class="episode-name">{{ episode.name }}</p>
+                      <p class="episode-code">{{ episode.episode }}</p>
+                    </div>
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        </div>
+
+        <div class="center-section">
+          <div class="large-image-container">
+            <img [src]="character()!.image" [alt]="character()!.name" />
+          </div>
+          
+          <div class="info-fields">
+            <div class="info-row">
+              <div class="info-label">Status:</div>
+              <div class="info-value">{{ character()!.status }}</div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">Species:</div>
+              <div class="info-value">{{ character()!.species }}</div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">Gender:</div>
+              <div class="info-value">{{ character()!.gender }}</div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">Origin:</div>
+              <div class="info-value">{{ character()!.origin.name }}</div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">Location:</div>
+              <div class="info-value">{{ character()!.location.name }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="right-section">
+          <button 
+            class="nav-button nav-button-prev" 
+            (click)="onNavigate('prev')"
+            aria-label="Previous"
+          >
+            ←
+          </button>
+          <button 
+            class="nav-button nav-button-next" 
+            (click)="onNavigate('next')"
+            aria-label="Next"
+          >
+            →
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+}

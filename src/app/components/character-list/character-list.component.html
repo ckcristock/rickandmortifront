@@ -25,13 +25,22 @@
         <option value="unknown">Unknown</option>
       </select>
       
-      <input 
-        type="text" 
-        class="filter-input"
-        placeholder="Species"
+      <select 
+        class="filter-select"
         [(ngModel)]="speciesFilter"
-        (keyup.enter)="applyFilters()"
-      />
+        (change)="applyFilters()"
+      >
+        <option value="">Species</option>
+        <option value="Human">Human</option>
+        <option value="Alien">Alien</option>
+        <option value="Humanoid">Humanoid</option>
+        <option value="Robot">Robot</option>
+        <option value="Cronenberg">Cronenberg</option>
+        <option value="Animal">Animal</option>
+        <option value="Disease">Disease</option>
+        <option value="Poopybutthole">Poopybutthole</option>
+        <option value="Mythological Creature">Mythological Creature</option>
+      </select>
       
       <button 
         class="clear-filters-btn"
@@ -90,11 +99,3 @@
     </div>
   }
 </div>
-
-@if (selectedCharacter()) {
-  <app-character-detail 
-    [character]="selectedCharacter()!"
-    (close)="closeDetail()"
-    (navigate)="navigateCharacter($event)"
-  />
-}
