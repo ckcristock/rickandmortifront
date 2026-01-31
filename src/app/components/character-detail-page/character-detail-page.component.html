@@ -1,12 +1,17 @@
 @if (loading()) {
-  <div class="modal-backdrop">
-    <div class="loading">
-      <div class="spinner"></div>
-      <p>Loading character...</p>
+  <div class="page-wrapper">
+    <div class="background-content"></div>
+    <div class="modal-backdrop">
+      <div class="loading">
+        <div class="spinner"></div>
+        <p>Loading character...</p>
+      </div>
     </div>
   </div>
 } @else if (character()) {
-  <div class="modal-backdrop" (click)="onBackdropClick($event)">
+  <div class="page-wrapper">
+    <div class="background-content"></div>
+    <div class="modal-backdrop" (click)="onBackdropClick($event)">
     <div class="modal-content">
       <button class="close-button" (click)="onClose()" aria-label="Close">
         ✕
@@ -96,6 +101,7 @@
           </button>
         </div>
       </div>
+    </div>
     </div>
   </div>
 }

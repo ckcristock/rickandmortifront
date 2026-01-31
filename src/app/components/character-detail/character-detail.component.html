@@ -1,21 +1,29 @@
-<div class="modal-backdrop" (click)="onBackdropClick($event)">
-  <div class="modal-content">
-    <button class="close-button" (click)="onClose()" aria-label="Cerrar">
-      ✕
-    </button>
+@if (loading()) {
+  <div class="modal-backdrop">
+    <div class="loading">
+      <div class="spinner"></div>
+      <p>Loading character...</p>
+    </div>
+  </div>
+} @else if (character()) {
+  <div class="modal-backdrop" (click)="onBackdropClick($event)">
+    <div class="modal-content">
+      <button class="close-button" (click)="onClose()" aria-label="Close">
+        ✕
+      </button>
 
-    <div class="modal-body">
-      <div class="left-section">
-        <div class="character-main-info">
-          <div class="character-name-section">
-            <h2>Nombre:</h2>
-            <div class="character-image-container">
-              <img [src]="character().image" [alt]="character().name" />
+      <div class="modal-body">
+        <div class="left-section">
+          <div class="character-main-info">
+            <div class="character-name-section">
+              <h2>Name:</h2>
+              <div class="character-image-container">
+                <img [src]="character()!.image" [alt]="character()!.name" />
             </div>
             <div class="character-details-text">
-              <p><strong>{{ character().name }}</strong></p>
-              <p>{{ character().status }}</p>
-              <p>{{ character().species }}</p>
+              <p><strong>{{ character()!.name }}</strong></p>
+              <p>{{ character()!.status }}</p>
+              <p>{{ character()!.species }}</p>
             </div>
           </div>
         </div>
@@ -44,29 +52,29 @@
 
       <div class="center-section">
         <div class="large-image-container">
-          <img [src]="character().image" [alt]="character().name" />
+          <img [src]="character()!.image" [alt]="character()!.name" />
         </div>
         
         <div class="info-fields">
           <div class="info-row">
             <div class="info-label">Estado:</div>
-            <div class="info-value">{{ character().status }}</div>
+            <div class="info-value">{{ character()!.status }}</div>
           </div>
           <div class="info-row">
             <div class="info-label">Especie:</div>
-            <div class="info-value">{{ character().species }}</div>
+            <div class="info-value">{{ character()!.species }}</div>
           </div>
           <div class="info-row">
             <div class="info-label">Género:</div>
-            <div class="info-value">{{ character().gender }}</div>
+            <div class="info-value">{{ character()!.gender ?? 'Unknown' }}</div>
           </div>
           <div class="info-row">
             <div class="info-label">Origen:</div>
-            <div class="info-value">{{ character().origin.name }}</div>
+            <div class="info-value">{{ character()!.origin?.name ?? 'Unknown' }}</div>
           </div>
           <div class="info-row">
             <div class="info-label">Ubicación:</div>
-            <div class="info-value">{{ character().location.name }}</div>
+            <div class="info-value">{{ character()!.location?.name ?? 'Unknown' }}</div>
           </div>
         </div>
       </div>
@@ -86,7 +94,8 @@
         >
           →
         </button>
+        </div>
       </div>
     </div>
   </div>
-</div>
+}

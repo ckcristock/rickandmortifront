@@ -1,13 +1,13 @@
 import { Component, computed, effect, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { Character, CharacterResponse } from '../../models/character.interface';
 import { CharacterService } from '../../services/character.service';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
 
 @Component({
   selector: 'app-character-list',
-  imports: [FormsModule, ToolbarComponent],
+  imports: [FormsModule, ToolbarComponent, RouterOutlet],
   templateUrl: './character-list.component.html',
   styleUrl: './character-list.component.scss',
 })

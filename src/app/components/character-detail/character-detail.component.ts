@@ -1,4 +1,7 @@
-import { Component, effect, inject, input, output, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs';
 import { Character, Episode } from '../../models/character.interface';
 import { CharacterService } from '../../services/character.service';
 
@@ -15,15 +18,29 @@ import { CharacterService } from '../../services/character.service';
 })
 export class CharacterDetailComponent {
   private readonly characterService = inject(CharacterService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
 
-  character = input.required<Character>();
-  close = output<void>();
-  navigate = output<'prev' | 'next'>();
+  protected readonly characterId = toSignal(
+    this.route.paramMap.pipe(map((params) => params.get('id'))),
+  );
 
+  protected readonly character = signal<Character | null>(null);
   protected readonly episodes = signal<Episode[]>([]);
+  protected readonly loading = signal(true);
   protected readonly loadingEpisodes = signal(false);
 
   constructor() {
+    effect(
+      () => {
+        const id = this.characterId();
+        if (id) {
+          this.loadCharacter(parseInt(id));
+        }
+      },
+      { allowSignalWrites: true },
+    );
+
     effect(
       () => {
         const char = this.character();
@@ -33,6 +50,20 @@ export class CharacterDetailComponent {
       },
       { allowSignalWrites: true },
     );
+  }
+
+  private loadCharacter(id: number): void {
+    this.loading.set(true);
+    this.characterService.getCharacterById(id).subscribe({
+      next: (char: Character) => {
+        this.character.set(char);
+        this.loading.set(false);
+      },
+      error: () => {
+        this.loading.set(false);
+        this.router.navigate(['/characters']);
+      },
+    });
   }
 
   protected loadEpisodes(): void {
@@ -61,11 +92,17 @@ export class CharacterDetailComponent {
   }
 
   protected onClose(): void {
-    this.close.emit();
+    this.router.navigate(['/characters']);
   }
 
   protected onNavigate(direction: 'prev' | 'next'): void {
-    this.navigate.emit(direction);
+    const current = this.character();
+    if (!current) return;
+
+    const newId = direction === 'prev' ? current.id - 1 : current.id + 1;
+    if (newId > 0) {
+      this.router.navigate(['/characters', newId]);
+    }
   }
 
   protected onBackdropClick(event: MouseEvent): void {
