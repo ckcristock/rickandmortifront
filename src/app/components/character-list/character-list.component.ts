@@ -82,7 +82,7 @@ export class CharacterListComponent {
         switchMap(() => {
           this.loading.set(true);
           this.error.set(null);
-          
+
           return this.characterService
             .getCharacters(
               this.currentPage(),
@@ -96,9 +96,9 @@ export class CharacterListComponent {
                 this.characters.set([]);
                 this.loading.set(false);
                 return of(null);
-              })
+              }),
             );
-        })
+        }),
       )
       .subscribe({
         next: (response: CharacterResponse | null) => {
